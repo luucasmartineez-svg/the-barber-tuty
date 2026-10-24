@@ -1,0 +1,68 @@
+<section class="page page--narrow">
+  <div class="page-heading">
+    <div>
+      <p class="eyebrow">CLIENTES / {{ id ? "EDITAR" : "CREAR" }}</p>
+      <h1>{{ id ? "Editar" : "Nuevo" }} <span>cliente.</span></h1>
+      <p class="muted">
+        Completá los datos de contacto. Todos los campos son obligatorios.
+      </p>
+    </div>
+  </div>
+  <div class="form-card">
+    @if (cargando) {
+      <p class="loading">Cargando cliente...</p>
+    } @else {
+      <form [formGroup]="form" (ngSubmit)="guardar()" novalidate>
+        <div class="form-grid">
+          <mat-form-field appearance="outline"
+            ><mat-label>Nombre *</mat-label
+            ><input matInput formControlName="nombre" /><mat-error
+              >Ingresá al menos 2 caracteres.</mat-error
+            ></mat-form-field
+          >
+          <mat-form-field appearance="outline"
+            ><mat-label>Apellido *</mat-label
+            ><input matInput formControlName="apellido" /><mat-error
+              >Ingresá al menos 2 caracteres.</mat-error
+            ></mat-form-field
+          >
+          <mat-form-field appearance="outline"
+            ><mat-label>Correo electrónico *</mat-label
+            ><input matInput type="email" formControlName="email" /><mat-error
+              >Ingresá un correo válido.</mat-error
+            ></mat-form-field
+          >
+          <mat-form-field appearance="outline"
+            ><mat-label>Teléfono *</mat-label
+            ><input matInput type="tel" formControlName="telefono" /><mat-error
+              >Ingresá un teléfono de 8 a 18 caracteres, solo números, espacios,
+              +, ( ), guiones.</mat-error
+            ></mat-form-field
+          >
+          <mat-form-field appearance="outline"
+            ><mat-label>Fecha de alta *</mat-label
+            ><input
+              matInput
+              type="date"
+              formControlName="fechaRegistro"
+            /><mat-error>Elegí la fecha.</mat-error></mat-form-field
+          >
+        </div>
+        @if (error) {
+          <p class="error-box" role="alert">{{ error }}</p>
+        }
+        <div class="form-actions">
+          <a routerLink="/clientes" class="btn btn--outline">Cancelar</a
+          ><button
+            mat-flat-button
+            class="material-submit material-submit--auto"
+            type="submit"
+            [disabled]="guardando"
+          >
+            {{ guardando ? "Guardando..." : "Guardar cliente →" }}
+          </button>
+        </div>
+      </form>
+    }
+  </div>
+</section>

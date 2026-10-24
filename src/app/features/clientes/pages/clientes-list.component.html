@@ -1,0 +1,85 @@
+<section class="page">
+  <div class="page-heading">
+    <div>
+      <p class="eyebrow">BASE DE DATOS</p>
+      <h1>Nuestros <span>clientes.</span></h1>
+      <p class="muted">
+        Gestioná la información de las personas que visitan la barbería.
+      </p>
+    </div>
+    <a routerLink="/clientes/nuevo" class="btn btn--primary">+ Nuevo cliente</a>
+  </div>
+  <div class="content-panel">
+    <div class="toolbar">
+      <app-buscador
+        placeholder="Buscar por nombre o correo..."
+        (cambio)="buscar($event)"
+      ></app-buscador
+      ><button class="btn btn--outline btn--small" (click)="actualizar()">
+        ↻ Actualizar
+      </button>
+    </div>
+    @if (aviso) {
+      <p class="message-box" role="status">{{ aviso }}</p>
+    }
+    @if (error) {
+      <p class="error-box">
+        {{ error }}
+        <button (click)="actualizar()" class="btn btn--outline btn--small">
+          Reintentar
+        </button>
+      </p>
+    }
+    @if (clientes$ | async; as clientes) {
+      @if (cargando) {
+        <p class="loading">Cargando clientes...</p>
+      } @else if (!error) {
+        @if (clientes.length) {
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nombre y apellido</th>
+                  <th>Correo electrónico</th>
+                  <th>Teléfono</th>
+                  <th>Registrado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (c of clientes; track c.id) {
+                  <tr>
+                    <td>
+                      <strong>{{ c.nombre }} {{ c.apellido }}</strong>
+                    </td>
+                    <td>{{ c.email }}</td>
+                    <td>{{ c.telefono }}</td>
+                    <td>{{ c.fechaRegistro | date: "dd/MM/yyyy" }}</td>
+                    <td class="table-actions">
+                      <a
+                        class="action-link"
+                        [routerLink]="['/clientes/editar', c.id]"
+                        >Editar</a
+                      ><button
+                        class="action-link action-link--danger"
+                        (click)="borrar(c)"
+                      >
+                        Eliminar
+                      </button>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        } @else {
+          <app-vacio
+            titulo="Sin resultados"
+            descripcion="No hay clientes que coincidan con tu búsqueda."
+          ></app-vacio>
+        }
+      }
+    }
+  </div>
+  <a routerLink="/panel" class="back-link">← Volver al panel</a>
+</section>

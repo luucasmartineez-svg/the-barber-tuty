@@ -1,0 +1,53 @@
+<section class="hero">
+  <div class="hero__content">
+    <p class="eyebrow">
+      <span class="eyebrow__line"></span> MÁS QUE UN CORTE · UNA EXPERIENCIA
+    </p>
+    <h1>ESTILO QUE<br /><span>DEJA HUELLA.</span></h1>
+    <p class="hero__description">
+      Bienvenido a <b>The Barber Tuty</b>. Un espacio donde el estilo se
+      encuentra con la precisión. Organizamos turnos, clientes y servicios en un
+      solo lugar.
+    </p>
+    <div class="button-row">
+      <a
+        class="btn btn--primary"
+        [routerLink]="auth.estaLogueado() ? '/panel' : '/login'"
+        >{{ auth.estaLogueado() ? "Ir al panel" : "Acceder al sistema" }}
+        <span>↗</span></a
+      ><a class="btn btn--outline" routerLink="/login">Conocer el sistema</a>
+    </div>
+    <div class="hero__metrics">
+      <div><strong>01.</strong><span>Atención personalizada</span></div>
+      <div><strong>02.</strong><span>Turnos organizados</span></div>
+      <div><strong>03.</strong><span>Profesionalismo</span></div>
+    </div>
+  </div>
+  <div class="hero__art" aria-hidden="true">
+    <div class="hero__circle"></div>
+    <div class="barber-pole"><div class="barber-pole__stripes"></div></div>
+    <div class="hero__art-caption">EST. 2026 <span>BARBER SHOP</span></div>
+    <div class="hero__spark">✂</div>
+  </div>
+</section>
+<section class="services-preview">
+  <p class="eyebrow">LO QUE HACEMOS</p>
+  <h2>LA DIFERENCIA ESTÁ <em>EN LOS DETALLES.</em></h2>
+  <div class="preview-grid">
+    <article>
+      <span>01 /</span>
+      <h3>Cortes clásicos</h3>
+      <p>Estilo, precisión y atención en cada detalle.</p>
+    </article>
+    <article>
+      <span>02 /</span>
+      <h3>Barba & perfilado</h3>
+      <p>Terminaciones cuidadas para una imagen impecable.</p>
+    </article>
+    <article>
+      <span>03 /</span>
+      <h3>Experiencia completa</h3>
+      <p>Combinamos corte, barba y asesoramiento.</p>
+    </article>
+  </div>
+</section>

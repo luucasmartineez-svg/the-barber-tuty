@@ -1,0 +1,88 @@
+<section class="page">
+  <div class="page-heading">
+    <div>
+      <p class="eyebrow">CENTRO DE CONTROL</p>
+      <h1>
+        Hola, <span>{{ auth.sesion?.nombre }}</span> 👋
+      </h1>
+      <p class="muted">
+        Este es el resumen de lo que está pasando en The Barber Tuty.
+      </p>
+    </div>
+    <a class="btn btn--primary" routerLink="/turnos/nuevo">+ Agendar turno</a>
+  </div>
+  @if (error) {
+    <div class="error-box" role="alert">
+      {{ error }}
+      <button class="btn btn--small btn--outline" (click)="cargar()">
+        Reintentar
+      </button>
+    </div>
+  }
+  @if (cargando) {
+    <p class="loading">Cargando información...</p>
+  } @else if (!error) {
+    <div class="stat-grid">
+      <mat-card class="stat-card"
+        ><small>TURNOS TOTALES</small><strong>{{ turnos.length }}</strong
+        ><span>Historial de reservas</span></mat-card
+      ><mat-card class="stat-card"
+        ><small>PENDIENTES</small><strong>{{ pendientes }}</strong
+        ><span>Por confirmar</span></mat-card
+      ><mat-card class="stat-card"
+        ><small>CLIENTES</small><strong>{{ clientes.length }}</strong
+        ><span>Personas registradas</span></mat-card
+      ><mat-card class="stat-card"
+        ><small>SERVICIOS ACTIVOS</small><strong>{{ activos }}</strong
+        ><span>En el catálogo</span></mat-card
+      >
+    </div>
+    <div class="panel-columns">
+      <section class="content-panel">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">AGENDA</p>
+            <h2>Próximos turnos</h2>
+          </div>
+          <a routerLink="/turnos" class="link-gold">Ver todos ↗</a>
+        </div>
+        @if (proximos.length) {
+          <div class="schedule-list">
+            @for (t of proximos; track t.id) {
+              <div class="schedule-row">
+                <div class="schedule-date">
+                  <strong>{{ t.fecha | date: "dd" }}</strong
+                  ><span>{{ t.fecha | date: "MMM" : "" : "es-AR" }}</span>
+                </div>
+                <div class="schedule-row__main">
+                  <b>{{ cliente(t.clienteId) }}</b
+                  ><span>{{ producto(t.productoId) }} · {{ t.hora }}</span>
+                </div>
+                <span class="badge" [appEstadoTurno]="t.estado">{{
+                  t.estado
+                }}</span>
+              </div>
+            }
+          </div>
+        } @else {
+          <p class="muted">Todavía no hay turnos próximos.</p>
+        }
+      </section>
+      <section class="content-panel">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">ACCESOS RÁPIDOS</p>
+            <h2>Gestioná tu local</h2>
+          </div>
+        </div>
+        <div class="quick-links">
+          <a routerLink="/turnos">↗ <span>Administrar turnos</span></a
+          ><a routerLink="/productos">↗ <span>Ver servicios</span></a>
+          @if (auth.tieneRol("admin")) {
+            <a routerLink="/clientes">↗ <span>Gestionar clientes</span></a>
+          }
+        </div>
+      </section>
+    </div>
+  }
+</section>

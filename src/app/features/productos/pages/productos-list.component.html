@@ -1,0 +1,108 @@
+<section class="page">
+  <div class="page-heading">
+    <div>
+      <p class="eyebrow">CATÁLOGO</p>
+      <h1>Nuestros <span>servicios.</span></h1>
+      <p class="muted">
+        Administrá los servicios, sus precios y el tiempo que lleva cada uno.
+      </p>
+    </div>
+    @if (auth.tieneRol("admin")) {
+      <a class="btn btn--primary" routerLink="/productos/nuevo"
+        >+ Nuevo servicio</a
+      >
+    }
+  </div>
+  <div class="content-panel">
+    <div class="toolbar">
+      <app-buscador
+        placeholder="Buscar por nombre o categoría..."
+        (cambio)="buscar($event)"
+      ></app-buscador
+      ><button class="btn btn--outline btn--small" (click)="recargar()">
+        ↻ Actualizar
+      </button>
+    </div>
+    @if (accion) {
+      <p class="message-box" role="status">{{ accion }}</p>
+    }
+    @if (error) {
+      <div class="error-box" role="alert">
+        {{ error }}
+        <button class="btn btn--small btn--outline" (click)="recargar()">
+          Reintentar
+        </button>
+      </div>
+    }
+    @if (listado$ | async; as productos) {
+      @if (cargando) {
+        <p class="loading">Cargando servicios...</p>
+      } @else if (!error) {
+        @if (productos.length) {
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Servicio</th>
+                  <th>Categoría</th>
+                  <th>Duración</th>
+                  <th>Precio</th>
+                  <th>Estado</th>
+                  @if (auth.tieneRol("admin")) {
+                    <th>Acciones</th>
+                  }
+                </tr>
+              </thead>
+              <tbody>
+                @for (p of productos; track p.id) {
+                  <tr>
+                    <td>
+                      <strong>{{ p.nombre }}</strong
+                      ><small>{{ p.descripcion }}</small>
+                    </td>
+                    <td>{{ p.categoria }}</td>
+                    <td>{{ p.duracionMinutos | duracion }}</td>
+                    <td class="price">
+                      {{
+                        p.precio
+                          | currency: "ARS" : "symbol" : "1.0-0" : "es-AR"
+                      }}
+                    </td>
+                    <td>
+                      <span
+                        class="badge"
+                        [class.badge--activo]="p.activo"
+                        [class.badge--inactivo]="!p.activo"
+                        >{{ p.activo ? "Activo" : "Inactivo" }}</span
+                      >
+                    </td>
+                    @if (auth.tieneRol("admin")) {
+                      <td class="table-actions">
+                        <a
+                          [routerLink]="['/productos/editar', p.id]"
+                          class="action-link"
+                          >Editar</a
+                        ><button
+                          class="action-link action-link--danger"
+                          (click)="borrar(p)"
+                        >
+                          Eliminar
+                        </button>
+                      </td>
+                    }
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        } @else {
+          <app-vacio
+            titulo="No hay servicios"
+            descripcion="Agregá uno o modificá la búsqueda."
+          ></app-vacio>
+        }
+      }
+    }
+  </div>
+  <a routerLink="/panel" class="back-link">← Volver al panel</a>
+</section>

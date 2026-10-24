@@ -1,0 +1,20 @@
+<div class="app-shell">
+ <header class="topbar">
+  <a routerLink="/inicio" class="logo" aria-label="Inicio The Barber Tuty"><span class="logo__mark">✂</span><span><b>THE BARBER</b><em>TUTY</em></span></a>
+  <nav class="topbar__links" aria-label="Navegación principal">
+   <a routerLink="/inicio" routerLinkActive="nav-active">Inicio</a>
+   <ng-container *ngIf="auth.sesion$ | async as sesion">
+    <a routerLink="/panel" routerLinkActive="nav-active">Panel</a>
+    <a routerLink="/productos" routerLinkActive="nav-active">Servicios</a>
+    <a *ngIf="sesion.rol==='admin'" routerLink="/clientes" routerLinkActive="nav-active">Clientes</a>
+    <a routerLink="/turnos" routerLinkActive="nav-active">Turnos</a>
+   </ng-container>
+  </nav>
+  <div class="topbar__user" *ngIf="auth.sesion$ | async as sesion; else ingresar">
+    <span class="role-chip">{{sesion.rol==='admin'?'Administrador':'Barbero'}}</span><button class="btn btn--quiet" (click)="salir()" title="Cerrar la sesión">Salir ↗</button>
+  </div>
+  <ng-template #ingresar><a class="btn btn--primary btn--small" routerLink="/login">Iniciar sesión</a></ng-template>
+ </header>
+ <main class="app-main"><router-outlet></router-outlet></main>
+ <footer class="footer"><span>✂ THE BARBER TUTY</span><span>Proyecto final · Algoritmos y Estructuras de Datos III</span></footer>
+</div>

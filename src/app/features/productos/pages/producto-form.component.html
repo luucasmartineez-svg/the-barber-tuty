@@ -1,0 +1,93 @@
+<section class="page page--narrow">
+  <div class="page-heading">
+    <div>
+      <p class="eyebrow">CATÁLOGO / {{ id ? "EDITAR" : "CREAR" }}</p>
+      <h1>{{ id ? "Editar" : "Nuevo" }} <span>servicio.</span></h1>
+      <p class="muted">Los campos con * son obligatorios.</p>
+    </div>
+  </div>
+  <div class="form-card">
+    @if (cargando) {
+      <p class="loading">Cargando servicio...</p>
+    } @else {
+      <form [formGroup]="form" (ngSubmit)="guardar()" novalidate>
+        <div class="form-grid">
+          <mat-form-field appearance="outline"
+            ><mat-label>Nombre del servicio *</mat-label
+            ><input
+              matInput
+              formControlName="nombre"
+              maxlength="70"
+            /><mat-error
+              >Ingresá al menos 3 caracteres.</mat-error
+            ></mat-form-field
+          >
+          <mat-form-field appearance="outline"
+            ><mat-label>Categoría *</mat-label
+            ><mat-select formControlName="categoria"
+              ><mat-option value="Corte">Corte</mat-option
+              ><mat-option value="Barba">Barba</mat-option
+              ><mat-option value="Combo">Combo</mat-option
+              ><mat-option value="Tratamiento"
+                >Tratamiento</mat-option
+              ></mat-select
+            ></mat-form-field
+          >
+          <mat-form-field appearance="outline" class="span-2"
+            ><mat-label>Descripción *</mat-label
+            ><textarea
+              matInput
+              formControlName="descripcion"
+              rows="3"
+              maxlength="250"
+            ></textarea
+            ><mat-error
+              >Ingresá una descripción de 10 a 250 caracteres.</mat-error
+            ></mat-form-field
+          >
+          <mat-form-field appearance="outline"
+            ><mat-label>Precio en pesos *</mat-label
+            ><input
+              matInput
+              type="number"
+              min="100"
+              formControlName="precio"
+            /><mat-error
+              >El precio debe ser de al menos $100.</mat-error
+            ></mat-form-field
+          >
+          <mat-form-field appearance="outline"
+            ><mat-label>Duración (minutos) *</mat-label
+            ><input
+              matInput
+              type="number"
+              min="15"
+              max="180"
+              step="15"
+              formControlName="duracionMinutos"
+            /><mat-error
+              >Duración entre 15 y 180 minutos.</mat-error
+            ></mat-form-field
+          >
+        </div>
+        <mat-checkbox formControlName="activo"
+          >Servicio disponible para reservas</mat-checkbox
+        >
+        @if (error) {
+          <p class="error-box" role="alert">{{ error }}</p>
+        }
+        <div class="form-actions">
+          <a routerLink="/productos" class="btn btn--outline">Cancelar</a
+          ><button
+            type="submit"
+            mat-flat-button
+            class="material-submit material-submit--auto"
+            [disabled]="guardando"
+          >
+            {{ guardando ? "Guardando..." : "Guardar servicio →" }}
+          </button>
+        </div>
+      </form>
+    }
+  </div>
+</section>

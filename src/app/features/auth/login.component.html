@@ -1,0 +1,64 @@
+<div class="login-layout">
+  <div class="login-intro">
+    <p class="eyebrow">ACCESO AL SISTEMA</p>
+    <h1>BIENVENIDO<br />  <span>THE BARBER TUTY</span></h1> 
+    <p>
+      Tu barbería, organizada. Controlá los servicios, gestioná los clientes y
+      administrá los turnos desde un único lugar.
+    </p>
+    <div class="login-decoration">✂ <span>THE BARBER TUTY</span></div>
+  </div>
+  <section class="form-card login-card">
+    <p class="eyebrow">INICIÁ TU SESIÓN</p>
+    <h2>Ingresá a tu cuenta</h2>
+    <p class="muted">Elegí una cuenta de demostración o completá tus datos.</p>
+    <form [formGroup]="form" (ngSubmit)="ingresar()" novalidate>
+      <mat-form-field appearance="outline" class="full"
+        ><mat-label>Correo electrónico</mat-label
+        ><input
+          matInput
+          type="email"
+          formControlName="email"
+          autocomplete="username"
+        /><mat-error>Ingresá un correo válido.</mat-error></mat-form-field
+      >
+      <mat-form-field appearance="outline" class="full"
+        ><mat-label>Contraseña</mat-label
+        ><input
+          matInput
+          type="password"
+          formControlName="clave"
+          autocomplete="current-password"
+        /><mat-error
+          >La contraseña debe tener al menos 8 caracteres.</mat-error
+        ></mat-form-field
+      >
+      @if (error) {
+        <p class="error-box" role="alert">{{ error }}</p>
+      }
+      <button mat-flat-button class="material-submit" type="submit">
+        Ingresar al sistema →
+      </button>
+    </form>
+    <div class="login-demo">
+      <p>ACCESOS DE PRUEBA</p>
+      <div class="button-row">
+        <button
+          type="button"
+          class="btn btn--outline btn--small"
+          (click)="cargarDemo('admin')"
+        >
+          Administrador</button
+        ><button
+          type="button"
+          class="btn btn--outline btn--small"
+          (click)="cargarDemo('barbero')"
+        >
+          Barbero
+        </button>
+      </div>
+      <!-- <small>Ambas cuentas usan la clave <b>Demo1234!</b></small> -->
+    </div>
+    <a routerLink="/inicio" class="muted back-link">← Volver al inicio</a>
+  </section>
+</div>
