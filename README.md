@@ -37,19 +37,14 @@ El sistema permite gestionar clientes, servicios y turnos desde una interfaz sen
 - Servicios HTTP y operaciones CRUD.
 - Pruebas unitarias.
 
-<<<<<<< HEAD
 ## Base de datos
 
-=======
->>>>>>> 93793e287eb62124c94688f3294ed3a968b7a663
 La aplicación utiliza MockAPI mediante dos recursos:
 
 - **registros:** almacena clientes y servicios.
 - **turnos:** almacena las reservas de la barbería.
 
-<<<<<<< HEAD
-=======
+
 ## Objetivo
 
 Aplicar los conocimientos adquiridos durante la cursada, utilizando Angular para desarrollar una aplicación funcional, organizada en componentes y capaz de gestionar información mediante servicios HTTP.
->>>>>>> 93793e287eb62124c94688f3294ed3a968b7a663
